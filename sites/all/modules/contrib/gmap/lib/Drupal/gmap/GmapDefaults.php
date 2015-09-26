@@ -26,7 +26,7 @@ class GmapDefaults {
   static private $gmapInstance;
 
   /**
-   * Do not change.
+   * do not change
    */
   private function __construct() {
     $this->defaults = array(
@@ -59,39 +59,27 @@ class GmapDefaults {
     }
     $this->defaults = array_merge($this->defaults, variable_get('gmap_default', array()));
 
-    // Former _gmap_base_js().
+    // former _gmap_base_js()
     $this->basejs = array();
     $path = drupal_get_path('module', 'gmap');
 
     // Convert some language codes.
-    // For Google Maps API v3, the drupal language code is not always
-    // the same as the google language code.
-    // @see
-    // https://developers.google.com/maps
-    // + /documentation/javascript/basics#Localization
+    // For Google Maps API v3, the drupal language code is not always the same as the google language code.
+    // @see https://developers.google.com/maps/documentation/javascript/basics#Localization
     global $language;
     switch ($language->language) {
-      // 'Chinese, Simplified'.
-      case 'zh-hans':
+      case 'zh-hans': // 'Chinese, Simplified'
         $langcode = 'zh-CN';
         break;
-
-      // 'Chinese, Traditional'.
-      case 'zh-hant':
+      case 'zh-hant': // 'Chinese, Traditional'
         $langcode = 'zh-TW';
         break;
-
-      // Hebrew.
-      case 'he':
+      case 'he': // Hebrew
         $langcode = 'iw';
         break;
-
-      // 'Norwegian Bokm�l', 'Bokm�l'.
-      case 'nb':
-        // 'Norwegian Nynorsk', 'Nynorsk'.
-      case 'nn':
-        // 'Norwegian'.
-        $langcode = 'no';
+      case 'nb': // 'Norwegian Bokm�l', 'Bokm�l'
+      case 'nn': // 'Norwegian Nynorsk', 'Nynorsk'
+        $langcode = 'no'; // 'Norwegian'
         break;
 
       default:
@@ -126,16 +114,13 @@ class GmapDefaults {
   }
 
   /**
-   * Do not clone.
+   * do not clone
    */
   protected function __clone() {
   }
 
   /**
-   * Getting an instance.
-   *
-   * @return object
-   *   GmapDefaults SingleTon instance
+   * @return GmapDefaults SingleTon instance
    */
   static public function getInstance() {
     if (is_null(self::$gmapInstance)) {
@@ -144,23 +129,13 @@ class GmapDefaults {
     return self::$gmapInstance;
   }
 
-  /**
-   * Get defaults.
-   *
-   * @return array
-   *   $this->defaults
-   */
   public function getDefaults() {
     return $this->defaults;
   }
 
-  /**
-   * Get base JS.
-   *
-   * @return array
-   *   $this->basejs
-   */
   public function getBaseJs() {
     return $this->basejs;
   }
+
+
 }

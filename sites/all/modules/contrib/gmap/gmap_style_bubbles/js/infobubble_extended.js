@@ -2,7 +2,6 @@
  * @file
  * Adds two new methods to the Infobubble.prototype class.
  */
-/*jshint -W069 */
 
 if (typeof InfoBubble === 'function') {
     /* First new method: bubbleBackgroundClassName allows theming of the whole

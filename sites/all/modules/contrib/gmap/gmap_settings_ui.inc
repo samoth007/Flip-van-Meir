@@ -1,4 +1,5 @@
 <?php
+// $Id: gmap_settings_ui.inc,v 1.12.2.5 2010/06/08 20:49:13 bdragon Exp $
 
 /**
  * @file
@@ -7,17 +8,11 @@
  * @todo move to GmapForms class
  */
 
-// $Id: gmap_settings_ui.inc,v 1.12.2.5 2010/06/08 20:49:13 bdragon Exp $.
-
-/**
- * Admin settings form.
- */
 function gmap_admin_settings($form, &$form_state) {
   // Reset the icondata cache.
   gmap_get_icondata(TRUE);
 
-  // Note the name of the variable for center of the map
-  // is latlong although the format is actually longitude, latitude.
+  //note the name of the variable for center of the map is latlong although the format is actually longitude, latitude
 
   $form['initialization'] = array(
     '#type' => 'fieldset',
@@ -163,11 +158,7 @@ function gmap_admin_settings($form, &$form_state) {
   $form['gmap_default']['controltype'] = array(
     '#type' => 'select',
     '#title' => t('Default control type'),
-    '#options' => array(
-      'None' => t('None'),
-      'Small' => t('Small'),
-      'Large' => t('Large'),
-    ),
+    '#options' => array('None' => t('None'), 'Small' => t('Small'), 'Large' => t('Large')),
     '#default_value' => $defaults['controltype'],
   );
   gmap_widget_setup($form['gmap_default']['controltype'], 'controltype', 'settings_default_map');
@@ -259,8 +250,7 @@ function gmap_admin_settings($form, &$form_state) {
     );
     if (isset($v['internal']) && $v['internal']) {
       $form['gmap_default']['behavior'][$k]['#disabled'] = TRUE;
-      // Compensate for behaviors
-      // becoming internal after acquiring the wrong value.
+      // Compensate for behaviors becoming internal after acquiring the wrong value.
       $form['gmap_default']['behavior'][$k]['#value'] = $v['default'];
     }
   }
@@ -318,7 +308,8 @@ function gmap_admin_settings($form, &$form_state) {
     $opts['clustermarker'] = array();
   }
 
-  $opts['gmap'] = array_merge(array(), $opts['gmap']);
+  $opts['gmap'] = array_merge(array( // None.
+  ), $opts['gmap']);
 
   $opts['gmarkermanager'] = array_merge(array(
     'borderPadding' => 256,
@@ -385,7 +376,7 @@ function gmap_admin_settings($form, &$form_state) {
     '#description' => t('If you are planning on using many markers on a single map, you may want to consider using a marker manager to speed up map rendering.'),
   );
 
-  // No Manager.
+  // No Manager
   $form['gmap_markermanager']['gmap'] = array(
     '#type' => 'fieldset',
     '#title' => t('Unmanaged marker settings'),
@@ -394,7 +385,7 @@ function gmap_admin_settings($form, &$form_state) {
     '#collapsed' => TRUE,
   );
 
-  // GMaps Utility Library -- MarkerManager.
+  // GMaps Utility Library -- MarkerManager
   $form['gmap_markermanager']['markermanager'] = array(
     '#type' => 'fieldset',
     '#title' => t('MarkerManager settings'),
@@ -452,7 +443,7 @@ function gmap_admin_settings($form, &$form_state) {
     '#parents' => array('gmap_markermanager', 'markermanager', 'markerMaxZoom'),
   );
 
-  // GMaps Utility Library -- MarkerClusterer.
+  // GMaps Utility Library -- MarkerClusterer
   $form['gmap_markermanager']['markerclusterer'] = array(
     '#type' => 'fieldset',
     '#title' => t('MarkerClusterer settings'),
@@ -482,9 +473,8 @@ function gmap_admin_settings($form, &$form_state) {
     '#default_value' => $opts['markerclusterer']['maxZoom'],
   );
 
-  // Add a text area for inputting styles as JSON.
-  // This is a really quick hack to make a nested
-  // JSON data structure editable in UI.
+  // add a text area for inputting styles as JSON
+  // this is a really quick hack to make a nested JSON data structure editable in UI
   $form['gmap_markermanager']['markerclusterer']['styles'] = array(
     '#type' => 'textarea',
     '#title' => t('MarkerClusterer styles in JSON. Read description!'),
@@ -494,7 +484,7 @@ function gmap_admin_settings($form, &$form_state) {
     '#rows' => 5,
   );
 
-  // Jef Poskanzer's Clusterer.
+  // Jef Poskanzer's Clusterer
   $form['gmap_markermanager']['clusterer'] = array(
     '#type' => 'fieldset',
     '#title' => t('Clusterer settings'),
@@ -549,7 +539,7 @@ function gmap_admin_settings($form, &$form_state) {
     '#default_value' => $opts['clusterer']['popup_mode'],
   );
 
-  // Martin Pearman's ClusterMarker.
+  // Martin Pearman's ClusterMarker
   $form['gmap_markermanager']['clustermarker'] = array(
     '#type' => 'fieldset',
     '#title' => t('ClusterMarker settings'),
@@ -621,13 +611,8 @@ function gmap_admin_settings($form, &$form_state) {
 }
 
 /**
- * Form validate.
- *
- * @param array $form
- *   Form array.
- *
- * @param array $form_state
- *   Form states array.
+ * @param $form
+ * @param $form_state
  *
  * @todo move to GmapForms class
  */
@@ -650,18 +635,9 @@ function gmap_admin_settings_validate($form, &$form_state) {
 
   // Check that this is valid JSON, or an empty string.
   if ('' != $form_state['values']['gmap_markermanager']['markerclusterer']['styles'] && !is_array(json_decode($form_state['values']['gmap_markermanager']['markerclusterer']['styles']))) {
-    $doc_text = 'MarkerStyleOptions';
-    $doc_url = 'http://gmaps-utility-library.googlecode.com/svn/trunk/markerclusterer/1.0/docs/reference.html#MarkerClustererOptions';
-    $doc_options = array(
-      'attributes' => array(
-        'target' => '_blank',
-      ),
-    );
-    $doc_link = l($doc_text, $doc_url, $doc_options);
-    $t_args = array('!doc_link' => $doc_link);
-    $err = t('The MarkerClusterer styles setting should be empty or a JSON array of !doc_link objects.', $t_args);
-    form_error($form['gmap_markermanager']['markerclusterer']['styles'], $err);
+    form_error($form['gmap_markermanager']['markerclusterer']['styles'], t('The MarkerClusterer styles setting should be empty or a JSON array of !doc_link objects.', array('!doc_link' => l('MarkerStyleOptions', 'http://gmaps-utility-library.googlecode.com/svn/trunk/markerclusterer/1.0/docs/reference.html#MarkerClustererOptions', array('attributes' => array('target' => '_blank'))))));
   }
+
 }
 
 /**
@@ -670,12 +646,12 @@ function gmap_admin_settings_validate($form, &$form_state) {
  * @todo move to GmapForms class
  */
 function gmap_admin_settings_markerclusterer_submit($form, &$form_state) {
-  /*
+  /**
    * Convert UI JSON text input into nested data structure.
    * In that way, it is ready to be stored as serialized data and to be output
    * with drupal_add_js().
    */
-  // For convenience: empty input means empty array.
+  // for convenience: empty input means empty array
   if ('' == $form_state['values']['gmap_markermanager']['markerclusterer']['styles']) {
     $styles_data = array();
   }
@@ -684,12 +660,10 @@ function gmap_admin_settings_markerclusterer_submit($form, &$form_state) {
   }
   $form_state['values']['gmap_markermanager']['markerclusterer']['styles'] = $styles_data;
 
-  // MarkerClusterer checks maxZoom to be a JS variable of type "number",
-  // so just do a type cast.
+  // MarkerClusterer checks maxZoom to be a JS variable of type "number", so just do a type cast
   $form_state['values']['gmap_markermanager']['markerclusterer']['maxZoom'] = (int) $form_state['values']['gmap_markermanager']['markerclusterer']['maxZoom'];
 
-  // MarkerClusterer checks gridSize to be a JS variable of type "number",
-  // so just do a type cast.
+  // MarkerClusterer checks gridSize to be a JS variable of type "number", so just do a type cast
   $form_state['values']['gmap_markermanager']['markerclusterer']['gridSize'] = (int) $form_state['values']['gmap_markermanager']['markerclusterer']['gridSize'];
 }
 

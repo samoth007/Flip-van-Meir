@@ -59,8 +59,7 @@ function _gmap_get_icondata() {
           'f' => array(),
           'w' => array(),
           'h' => array(),
-          // Sets of sets.
-          'i' => array(),
+          'i' => array(), // Sets of sets.
         );
 
         // Part 1: Collect image names.
@@ -172,7 +171,6 @@ function _gmap_get_icondata() {
 
 /**
  * Make a compressed definition.
- *
  * A series of arrays with trailing holes allowed.
  * Any missing values at the end of subarrays
  * are equal to the last defined value.
@@ -193,7 +191,7 @@ function _gmap_compress_icon_def($iconset) {
     'transparent',
   );
   $ints = array(3 => TRUE, 4 => TRUE, 5 => TRUE, 6 => TRUE);
-  $nulls = array('', '', array(), 0, 0, 0, 0, '', '', '', '', '');
+  $nulls = array('', '', array(), 0, 0, 0, 0, '', '', '', '', '',);
 
   $a = array();
   for ($c0 = 0; $c0 < count($order); $c0++) {
@@ -239,9 +237,6 @@ function _gmap_compress_array(&$arr) {
   }
 }
 
-/**
- * Get marker titles.
- */
 function _gmap_get_marker_titles() {
   $markerdirs = variable_get('gmap_markerfiles', array(drupal_get_path('module', 'gmap') . '/markers'));
   $markercustomdir = variable_get('gmap_marker_custom_dir', NULL);
@@ -280,13 +275,12 @@ function _gmap_get_marker_titles() {
         $inis[] = $data;
       }
       unset($inifiles);
-      // @codingStandardsIgnoreStart
+
       foreach ($inis as $ini => $inidata) {
         foreach ($inidata as $k => $v) {
           $titles[$k] = t($inis[$ini][$k]['name']);
         }
       }
-      // @codingStandardsIgnoreEnd
     }
   }
   return $titles;

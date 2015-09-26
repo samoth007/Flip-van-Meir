@@ -8,7 +8,6 @@
 /*global G_PHYSICAL_MAP, G_SATELLITE_MAP, GHierarchicalMapTypeControl */
 /*global GKeyboardHandler, GLatLngBounds, GMenuMapTypeControl, GEvent */
 /*global GOverviewMapControl, GScaleControl, GUnload */
-/*jshint -W069 */
 
 (function () { // BEGIN closure
     var handlers = {};
@@ -135,7 +134,7 @@
                 .addClass('gmap-' + mapid + '-gmap')
                 .addClass('gmap-processed')
                 .each(function () {
-                    Drupal.gmap.setup.call(this, settings);
+                    Drupal.gmap.setup.call(this, settings)
                 });
         });
     };
@@ -287,9 +286,7 @@ Drupal.gmap.addHandler('gmap', function (elem) {
             case 'Satellite':
                 opts.mapTypeId = google.maps.MapTypeId.SATELLITE;
                 break;
-            /* falls through */
             case 'Map':
-            /* falls through */
             default:
                 opts.mapTypeId = google.maps.MapTypeId.ROADMAP;
                 break;
@@ -372,10 +369,6 @@ Drupal.gmap.addHandler('gmap', function (elem) {
             opts.overviewMapControlOptions = {opened: true};
         }
 
-        // Map styles.
-        if (obj.vars.mapstyles) {
-            obj.opts.styles = obj.vars.mapstyles;
-        }
     });
 
     obj.bind("boot", function () {
@@ -607,7 +600,7 @@ Drupal.gmap.addHandler('controltype', function (elem) {
     });
     // Send out outgoing height changes.
     jQuery(elem).change(function () {
-        obj.vars.controltype = elem.value;
+        obj.vars.controltype = elem.value
         obj.change("controltypechange", binding);
     });
 });
@@ -625,10 +618,10 @@ Drupal.behaviors.GMap = {
             });
         }
         jQuery('.gmap-gmap:not(.gmap-processed)', context).addClass('gmap-processed').each(function () {
-            Drupal.gmap.setup.call(this);
+            Drupal.gmap.setup.call(this)
         });
         jQuery('.gmap-control:not(.gmap-processed)', context).addClass('gmap-processed').each(function () {
-            Drupal.gmap.setup.call(this);
+            Drupal.gmap.setup.call(this)
         });
     },
     detach: function (context, settings) {
@@ -639,6 +632,6 @@ Drupal.behaviors.GMap = {
 
             //unload map
             Drupal.gmap.unloadMap(mapid[1]);
-        }).removeClass('gmap-processed');
+        });
     }
 };

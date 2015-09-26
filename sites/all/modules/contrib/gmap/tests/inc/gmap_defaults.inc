@@ -62,42 +62,30 @@ function legacy_gmap_module_invoke($op, &$map) {
 
 /**
  * Adds the basic js files needed for a GMap.
- *
  * Is called by hook_element_info().
- * To add js-files for a specific Views display,
- * please use _gmap_pre_render_map().
+ * To add js-files for a specific Views display, please use _gmap_pre_render_map().
  */
 function legacy__gmap_base_js() {
   $ret = array();
   $path = drupal_get_path('module', 'gmap');
 
   // Convert some language codes.
-  // For Google Maps API v3, the drupal language code
-  // is not always the same as the google language code.
+  // For Google Maps API v3, the drupal language code is not always the same as the google language code.
   // @see https://developers.google.com/maps/documentation/javascript/basics#Localization
   global $language;
   switch ($language->language) {
-    // 'Chinese, Simplified'.
-    case 'zh-hans':
+    case 'zh-hans': // 'Chinese, Simplified'
       $langcode = 'zh-CN';
       break;
-
-    // 'Chinese, Traditional'.
-    case 'zh-hant':
+    case 'zh-hant': // 'Chinese, Traditional'
       $langcode = 'zh-TW';
       break;
-
-    // Hebrew.
-    case 'he':
+    case 'he': // Hebrew
       $langcode = 'iw';
       break;
-
-    // 'Norwegian Bokm�l', 'Bokm�l'.
-    case 'nb':
-      // 'Norwegian Nynorsk', 'Nynorsk'.
-    case 'nn':
-      // 'Norwegian'.
-      $langcode = 'no';
+    case 'nb': // 'Norwegian Bokm�l', 'Bokm�l'
+    case 'nn': // 'Norwegian Nynorsk', 'Nynorsk'
+      $langcode = 'no'; // 'Norwegian'
       break;
 
     default:
@@ -148,7 +136,7 @@ function legacy_gmap_get_key() {
 }
 
 /**
- * Determine the site protocol (http or https).
+ * Determine the site protocol (http or https)
  */
 function legacy_gmap_views_protocol() {
   return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http';

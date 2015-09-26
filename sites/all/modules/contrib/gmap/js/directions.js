@@ -28,7 +28,6 @@
  * obj.vars.behavior.directionsClickable : Make the directions results panel clickable
  *
  */
-/*jshint -W069 */
 
 Drupal.gmap.addHandler('gmap', function (element) {
     var obj = this;
@@ -38,7 +37,7 @@ Drupal.gmap.addHandler('gmap', function (element) {
             // try to recover the mapid : taken directly from gmap.js
             var map = obj.map.getDiv();
             var mapid = map.id.split('-');
-            if (Drupal.settings.gmap_remap_widgets) {
+            if (Drupal.settings['gmap_remap_widgets']) {
                 if (Drupal.settings['gmap_remap_widgets'][obj.id]) {
                     jQuery.each(Drupal.settings['gmap_remap_widgets'][obj.id].classes, function () {
                         jQuery(obj).addClass(this);
@@ -53,7 +52,7 @@ Drupal.gmap.addHandler('gmap', function (element) {
 
             obj.directions = $('<div id="gmaps-' + mapid + '-directions0" class="gmap-control gmap-control-directions" />'); // this assumes that directions0 isn't taken already
             $(map).after(obj.directions);
-            Drupal.gmap.setup.call(obj.directions[0]);
+            Drupal.gmap.setup.call(obj.directions[0])
         }
     });
 
@@ -76,7 +75,7 @@ Drupal.gmap.addHandler('directions', function (element) {
     });
 
     obj.bind('destinationsdirections', function (route) {
-        var directionsRequest = {waypoints: []}; // this has to match the google.maps.DirectionsRequest
+        var directionsRequest = {waypoints: []} // this has to match the google.maps.DirectionsRequest
 
         if (route.origin) {
             if (route.origin.latitude) {
@@ -92,7 +91,7 @@ Drupal.gmap.addHandler('directions', function (element) {
             var requestWaypoint = {
                 location: waypoint.location,
                 stopover: true  // false would be better, but it makes the directions fail
-            };
+            }
             $.extend(waypoint, requestWaypoint);
             if (!directionsRequest.origin) { // if no origin was passed, then take the first point
                 directionsRequest.origin = waypoint.location;
@@ -125,7 +124,7 @@ Drupal.gmap.addHandler('directions', function (element) {
                 directionsRequest.travelMode = google.maps.TravelMode.DRIVING;
         }
 
-        if (directionsRequest.waypoints.length === 0) {
+        if (directionsRequest.waypoints.length == 0) {
             delete directionsRequest.waypoints;
         } // don't send waypoints if there aren't any
         obj.directionsservice.route(directionsRequest, function (directions, status) {
@@ -194,6 +193,7 @@ Drupal.gmap.addHandler('directions', function (element) {
     obj.bind('directionsPanelClick', function (route) { // activate and deactivate the directions on the map
         if (obj.vars.behavior.directionsPanelActivateOnClick) { // this behaviour may be undesirable
             if (panel.hasClass('directions-active')) {
+                ;
                 if (!obj.vars.behavior.directionsPanelActivateSingle && obj.map.data('activeDirectionsPanel')) {
                     obj.map.data('activeDirectionsPanel').click();
                 }
