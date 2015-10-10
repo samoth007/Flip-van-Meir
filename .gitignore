@@ -81,3 +81,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/sites/all/themes/flipvanmeir/node_modules/
+/vendor/
